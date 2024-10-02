@@ -69,7 +69,7 @@ function App() {
           <input ref={inputRef} type="text" className='border rounded w-[100%] bg-transparent h-[2em]' />
         </div>
         <div className='p-2'>
-          <button onClick={() => setData((i) => [...i, inputRef?.current.value])} className="bg-blue-400 text-black py-2 px-3 rounded-md">
+          <button onClick={() => setData((i) => [...i, inputRef?.current!.value])} className="bg-blue-400 text-black py-2 px-3 rounded-md">
             Add Task
           </button>
         </div>
