@@ -1,16 +1,29 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useRef, useState } from 'react';
 
 function App() {
+  const [data, setData] = useState<string[]>([]);
+  const inputRef = useRef< null | HTMLInputElement>(null)
 
-  const question = [
-    'Create Guest Experience mobile check-in',
-    'Document current CI/CD process',
-    'Perform Code Review for final Pillow-talk release',
-    'implement new color palette from design team',
-    'fix image uploading process for guest check in',
-    'provide on-boarding documentation'
-  ]
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
+  });
+
+  function removeArr(id: number) {
+    setData(prevData => prevData.filter((_, index) => index !== id));
+  }
+
+  // const question = [
+  //   'Create Guest Experience mobile check-in',
+  //   'Document current CI/CD process',
+  //   'Perform Code Review for final Pillow-talk release',
+  //   'implement new color palette from design team',
+  //   'fix image uploading process for guest check in',
+  //   'provide on-boarding documentation'
+  // ]
 
   return (
    <div className="bg-[#1a202c] text-white">
@@ -20,7 +33,7 @@ function App() {
     </div>
 
     <div className="container mx-auto text-center">
-      {question.map((q) => (
+      {data?.map((q, idx) => (
         <div className="flex flex-row p-4">
           <div className="basis-[10%]">
             <input
@@ -33,7 +46,7 @@ function App() {
           </div>
           <div className="basis-[10%]">
             <button className="bg-transparent text-red-300 border border-red-300 py-1 px-2 rounded-md hover:bg-red-300 hover:text-white">
-              <FontAwesomeIcon icon={faTrash} />
+              <FontAwesomeIcon onClick={() => removeArr(idx)} icon={faTrash} />
             </button>
           </div>
         </div>
@@ -53,10 +66,10 @@ function App() {
           <label htmlFor="">Add ToDo</label>
         </div>
         <div className='p-2'>
-          <input type="text" className='border rounded w-[100%] bg-transparent h-[2em]' />
+          <input ref={inputRef} type="text" className='border rounded w-[100%] bg-transparent h-[2em]' />
         </div>
         <div className='p-2'>
-          <button className="bg-blue-400 text-black py-2 px-3 rounded-md">
+          <button onClick={() => setData((i) => [...i, inputRef?.current.value])} className="bg-blue-400 text-black py-2 px-3 rounded-md">
             Add Task
           </button>
         </div>
